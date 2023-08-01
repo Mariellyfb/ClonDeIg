@@ -1,36 +1,38 @@
 /* eslint-disable no-undef */
-require("dotenv").config();
+require('dotenv').config();
 
-const getDb = require("./getDb.js");
+const getDb = require('./getDb.js');
 
 const main = async () => {
-  let connection;
+    let connection;
 
-  try {
-    connection = await getDb();
+    try {
+        connection = await getDb();
 
-    console.log("borrando tablas si existen...");
+        console.log('borrando tablas si existen...');
 
-    await connection.query(
-      "DROP TABLE IF EXISTS likes, comments, followers, posts, users"
-    );
+        await connection.query(
+            'DROP TABLE IF EXISTS likes, comments, followers, posts, users'
+        );
 
-    console.log("creando tablas...");
+        console.log('creando tablas...');
 
-    await connection.query(`
+        await connection.query(`
         CREATE TABLE IF NOT EXISTS users (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             email VARCHAR(100) UNIQUE NOT NULL,
-            name VARCHAR(50) NOT NULL,
+            name VARCHAR(100) NOT NULL,
+            lastname VARCHAR(100) NOT NULL,
             phone VARCHAR(10) NOT NULL,
-            nameUser VARCHAR (50) NOT NULL,
+            username VARCHAR (50) NOT NULL,
             password VARCHAR(100) NOT NULL,
+            birthdate DATE NOT NULL,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP
         )
         `);
 
-    await connection.query(`
+        await connection.query(`
         CREATE TABLE IF NOT EXISTS posts (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             description TEXT NOT NULL,
@@ -42,7 +44,7 @@ const main = async () => {
         )
         `);
 
-    await connection.query(`
+        await connection.query(`
     CREATE TABLE IF NOT EXISTS followers (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         userName VARCHAR (50) NOT NULL,
@@ -52,7 +54,7 @@ const main = async () => {
     )
     `);
 
-    await connection.query(`
+        await connection.query(`
     CREATE TABLE IF NOT EXISTS comments (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         content VARCHAR (500),
@@ -65,7 +67,7 @@ const main = async () => {
     )
     `);
 
-    await connection.query(`
+        await connection.query(`
         CREATE TABLE IF NOT EXISTS likes (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             userId INT UNSIGNED NOT NULL,
@@ -75,12 +77,12 @@ const main = async () => {
             FOREIGN KEY(postId) REFERENCES posts(id)
         )
     `);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    if (connection) connection.release();
-    process.exit();
-  }
+    } catch (err) {
+        console.error(err);
+    } finally {
+        if (connection) connection.release();
+        process.exit();
+    }
 };
 
 main();
