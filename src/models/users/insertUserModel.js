@@ -1,7 +1,7 @@
 // Importamos las dependencias.
 const uuid = require('uuid');
 const bcrypt = require('bcrypt');
-const getDb = require('..getDb');
+const getDb = require('../../db/getDb');
 
 //importamos error
 const { emailAlreadyRegisteredError } = require('../../services/errorService');
