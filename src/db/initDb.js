@@ -24,6 +24,7 @@ const main = async () => {
             name VARCHAR(100) NOT NULL,
             lastname VARCHAR(100) NOT NULL,
             phone VARCHAR(10) NOT NULL,
+            avatar VARCHAR(200),
             username VARCHAR (50) NOT NULL,
             password VARCHAR(100) NOT NULL,
             birthdate DATE NOT NULL,
@@ -36,7 +37,7 @@ const main = async () => {
         CREATE TABLE IF NOT EXISTS posts (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             description TEXT NOT NULL,
-            photo TEXT NOT NULL,
+            photo VARCHAR(200) NOT NULL,
             userId INT UNSIGNED NOT NULL,
             createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
             modifiedAt DATETIME ON UPDATE CURRENT_TIMESTAMP,
@@ -44,6 +45,7 @@ const main = async () => {
         )
         `);
 
+        /*
         await connection.query(`
     CREATE TABLE IF NOT EXISTS followers (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -53,7 +55,19 @@ const main = async () => {
         FOREIGN KEY(userId) REFERENCES users(id)
     )
     `);
-
+    */
+   
+   await connection.query(`
+   CREATE TABLE IF NOT EXISTS likes (
+       id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+       userId INT UNSIGNED NOT NULL,
+       postId INT UNSIGNED NOT NULL, 
+       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+       FOREIGN KEY(userId) REFERENCES users(id),
+       FOREIGN KEY(postId) REFERENCES posts(id),
+       UNIQUE(userId,postId)
+   )
+`);
         await connection.query(`
     CREATE TABLE IF NOT EXISTS comments (
         id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -67,16 +81,6 @@ const main = async () => {
     )
     `);
 
-        await connection.query(`
-        CREATE TABLE IF NOT EXISTS likes (
-            id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-            userId INT UNSIGNED NOT NULL,
-            postId INT UNSIGNED NOT NULL, 
-            createdAt DATETIME NOT NULL,
-            FOREIGN KEY(userId) REFERENCES users(id),
-            FOREIGN KEY(postId) REFERENCES posts(id)
-        )
-    `);
     } catch (err) {
         console.error(err);
     } finally {

@@ -21,6 +21,9 @@ const {
 
 app.post(newUserController);
 
+app.use(notFoundController)
+app.use(errorController)
+
 app.listen(process.env.PORT, () => {
     console.log(`Servidor en escucha en http://localhost:${process.env.PORT}`);
 });

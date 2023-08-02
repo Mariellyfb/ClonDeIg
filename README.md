@@ -61,28 +61,93 @@ Este ejercicio consiste en crear una API que simule el funcionamiento de una apl
     -   updatedAt
     -   createdAt
 
+<img src="http://localhost:3000/jf8fujf8f8uf8f8f8.jpg" alt="fdgf">
+
 ## Endpoints
 
 ### Usuarios: ✅
 
-POST [/users] - Registro de usuario.
+POST [/users] - Registro de usuario. (body formData para poder enviar foto avatar)
 
-POST [/users/login] - Login de usuario (devuelve token).
-
+POST [/users/login] - Login de usuario (devuelve token, (username, avatar si no se implementa get /users) ).
 GET [/users] - Devuelve información del usuario del token. TOKEN
 
 **_ PUT [/users] - Editar el email o el nombre de usuario. TOKEN _**
 
 ### Posts:
 
-POST [/photo] - Permite crear post. TOKEN
+POST [/posts] - Permite crear post (body de tipo formData). TOKEN
 
-GET [/photos] - Lista las ultimas fotos.
+GET [/posts] - Lista de los posts ordenados por fecha desc
+    [
+        {
+            id 
+            desc
+            photo 
+            userId
+            username
+            avatar
+            createdAt
+            isLiked,
+            numLikes,
+            numComentarios
+        },
+       {
+            id 
+            desc
+            photo 
+            userId
+            avatar
+            username
+            createdAt
+            isLiked,
+            numLikes,
+            numComentarios
+        },
+    ]
+    /posts -> lista de los posts ordenados por fecha desc
+    /posts?search=Italia
+    /posts?search=Italia&order=fecha&orderType=ASC
+    /posts?order=likes&orderType=DESC
+    /posts?order=coments&orderType=DESC
 
--   GET [/photos/postId] - Devuelve información de un post por su descripción. \*
+GET [/posts/:idUser] - Lista de los posts ordenados por fecha desc de idUser
 
-POST [/photos/:postId/likes] - Añade un like a una foto. TOKEN
+GET [/photos/postId] - Devuelve información de un post por su descripción.
+{
+       id 
+       description
+       photo 
+       userId
+       username
+       createdAt
+       isLiked,
+       numLikes,
+       likes: [
+        {
+            userid
+            username
+        }
+       ]
+       numComentarios
+       comentarios: [
+        {
+            id
+            userid
+            username
+            content
+        },
+        {
+            id
+            userid
+            username
+            content
+        }
+       ]
+}
 
-DELETE [/photos/:postId/likes] - Deshace un like de una foto. TOKEN
+POST [/photos/:postId/likes] - Añade/quita un like a una foto, devolver el numero actualizado de likes. TOKEN
+
+
 
 **_ DELETE [/photos/userId:postId] - Borra una foto solo si eres quien lo creó. TOKEN _**
