@@ -43,6 +43,7 @@ const main = async () => {
     await connection.query(`
    CREATE TABLE IF NOT EXISTS likes (
        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
+       amount TINYINT UNSIGNED NOT NULL,
        userId INT UNSIGNED NOT NULL,
        postId INT UNSIGNED NOT NULL, 
        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,

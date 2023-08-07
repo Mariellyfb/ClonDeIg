@@ -1,4 +1,13 @@
 module.exports = {
+
+  cannotLikeOwnPostError() {
+    throw {
+        httpStatus: 403, // Forbidden
+        code: 'CANNOT_LIKE_OWN_POST',
+        message: 'No puedes dar like a tu propio post',
+    };
+},
+
   emailAlreadyRegisteredError() {
     throw {
       httpStatus: 409, // Conflict
@@ -12,6 +21,14 @@ module.exports = {
       httpStatus: 401, // Invalid Credentials
       code: "INVALID_CREDENTIALS",
       message: "Las credenciales no son validas",
+    };
+  },
+
+  likeAlreadyExistsError() {
+    throw {
+      httpStatus: 403, // Like exists
+      code: "LIKE_ALREADY_EXIST",
+      message: "Ya le has dado like al mismo post",
     };
   },
 

@@ -1,11 +1,11 @@
 const searchPostModel = require('../../models/posts/searchPostModel');
 
-const searchPostUser = async (req, res, next) => {
+const searchByDesc = async (req, res, next) => {
     try {
-        const { username } = req.query;
+        const { keyword } = req.query;
 
         // Dado que la propiedad user puede no existir lo indicamos por medio de la interrogación.
-        const posts = await searchPostModel(username, req.user?.id);
+        const posts = await searchPostModel(keyword, req.user?.id);
 
         res.send({
             status: 'ok',
@@ -18,4 +18,4 @@ const searchPostUser = async (req, res, next) => {
     }
 };
 
-module.exports = searchPostUser;
+module.exports = searchByDesc;
