@@ -1,24 +1,21 @@
-/* 
-const uuid = require('uuid');
+const getDb = require("../../db/getDb");
+const uuid = require("uuid");
 
 const insertPostModel = async (description, photo, userId) => {
+  let connection;
 
-    let connection;
+  try {
+    connection = await getDb();
 
-    try {
-        connection = await getDb();
+    let postId = uuid.v4();
 
-        let postId = uuid.v4();
+    await connection.query(
+      `INSERT INTO posts(id, description, photo, userId) VALUES(?, ?, ?, ?)`,
+      [postId, description, photo, userId]
+    );
 
-        await connection.query(
-            `INSERT INTO posts(id, description, photo, userId) VALUES(?, ?, ?, ?)`,
-            [postId, description, photo, userId]
-
-        );
-
-
-
-
-
-    }
-} */
+    return postId;
+  } finally {
+    if (connection) connection.release();
+  }
+};
