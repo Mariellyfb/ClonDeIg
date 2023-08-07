@@ -7,6 +7,7 @@ const uuid = require('uuid');
 // Importamos los errores.
 const { saveFileError } = require('./errorService');
 
+// Funcion principal para guardar la foto en el directorio.
 const savePhotoService = async (img, width) => {
     try {
         const uploadsDir = path.join(
@@ -16,6 +17,7 @@ const savePhotoService = async (img, width) => {
             process.env.UPLOADS_DIR
         );
 
+        // Creamos la carpeta uoloads usando el metodo "access".
         try {
             await fs.access(uploadsDir);
         } catch {
@@ -28,9 +30,9 @@ const savePhotoService = async (img, width) => {
         // Redimensionamos la imagen
         sharpImg.resize(width);
 
-        // Generamos un nombre único para la imagen para evitar que haya dos imágenes con el
-        // mismo nombre.
+        // Generamos un nombre único para la imagen para evitar que haya dos imágenes con el mismo nombre.
         const imgName = `${uuid.v4()}.jpg`;
+
         // Ruta absoluta a la imagen.
         const imgPath = path.join(uploadsDir, imgName);
 

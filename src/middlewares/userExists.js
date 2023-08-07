@@ -5,7 +5,7 @@ const getDB = require('../db/getDb');
 const { notFoundError } = require('../services/errorService');
 
 // Función controladora intermedia que lanza un error si no existe el usuario con el id establecido.
-const userNotExists = async (req, res, next) => {
+const userExists = async (req, res, next) => {
     let connection;
 
     try {
@@ -32,4 +32,4 @@ const userNotExists = async (req, res, next) => {
     }
 };
 
-module.exports = userNotExists;
+module.exports = userExists;

@@ -2,50 +2,51 @@ const express = require('express');
 const router = express.Router();
 
 // Importamos las funciones controladoras requeridas.
-const {
-    postExists,
-    authUser,
-    userNotExist,
-    searchPostIdModel,
-} = require('../middlewares/userNotExists');
+const { postExists, authUser, userExist } = require('../middlewares');
 
-// REVISAR
 const {
-    searchByDesc,
     getPostController,
+    likePostController,
+    newPostController,
+    searchByDesc,
     searchPostUser,
 } = require('../controllers/posts');
 
-const newPostController = require('../controllers/posts/newPostController');
-const likePostController = require('../controllers/posts/likePostController');
-
-// Listar entradas.
-router.get(
-    '/users/posts',
-    likePostController,
-    searchPostIdModel,
-    searchPostUser
-);
+const { insertPostModel, insertPhotoModel } = require('../models/posts');
 
 //Nuevo post.
-router.post('/posts', authUser, userNotExist, newPostController);
+router.post(
+    '/posts',
+    insertPostModel,
+    insertPhotoModel,
+    postExists,
+    authUser,
+    userExist,
+    newPostController
+);
+
+// Listar ordenados los posts de un usuario en concreto.
+router.get(
+    '/users/posts',
+    authUser,
+    getPostController,
+    searchByDesc,
+    searchPostUser
+);
 
 // Likes.
 router.post(
     '/posts/:postId/likes',
     authUser,
-    userNotExist,
+    userExist,
     postExists,
     likePostController
 );
 
-// Obtener info de una entrada concreta.
-router.get('/posts/:postId', postExists, getPostController);
+// Obtener posts por su descripcion o palabras clave.
+router.get('/posts/key', postExists, getPostController, searchByDesc);
 
 // Devolver ordenados los posts de un usuario.
 router.get('/user/Posts', postExists, getPostController, searchPostUser);
-
-// Devolver busqueda por descripcion o palabras clave.
-router.get('/posts/key', postExists, getPostController, searchByDesc);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 // Importamos los modelos.
-const selectPostByIdModel = require('../../models/posts/selectPostByIdModel');
+const searchPostModel = require('../../models/posts/searchPostModel');
 
 // Función controladora final que retorna una entrada con un id dado.
 const getPostController = async (req, res, next) => {
@@ -9,7 +9,7 @@ const getPostController = async (req, res, next) => {
 
         // Con la interrogación indicamos
         // a JavaScript que "user" puede ser undefined.
-        const post = await selectPostByIdModel(postId, req.user?.id);
+        const post = await searchPostModel(postId, req.user?.id);
 
         res.send({
             status: 'ok',
@@ -23,4 +23,3 @@ const getPostController = async (req, res, next) => {
 };
 
 module.exports = getPostController;
-
