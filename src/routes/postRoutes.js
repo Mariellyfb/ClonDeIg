@@ -2,16 +2,33 @@ const express = require('express');
 const router = express.Router();
 
 // Importamos las funciones controladoras requeridas.
-const {postExists, authUser, userNotExist, searchPostIdModel} = require('../middlewares/userNotExists');
+const {
+    postExists,
+    authUser,
+    userNotExist,
+    searchPostIdModel,
+} = require('../middlewares/userNotExists');
 
-const {searchByDesc, getPostController,newPostController, searchPostUser } = require('../controllers/posts');
+// REVISAR
+const {
+    searchByDesc,
+    getPostController,
+    searchPostUser,
+} = require('../controllers/posts');
+
+const newPostController = require('../controllers/posts/newPostController');
 const likePostController = require('../controllers/posts/likePostController');
 
 // Listar entradas.
-router.get('/users/posts',likePostController, searchPostIdModel, searchPostUser);
+router.get(
+    '/users/posts',
+    likePostController,
+    searchPostIdModel,
+    searchPostUser
+);
 
 //Nuevo post.
-router.post('/posts',authUser, userNotExist,newPostController);
+router.post('/posts', authUser, userNotExist, newPostController);
 
 // Likes.
 router.post(
@@ -23,24 +40,12 @@ router.post(
 );
 
 // Obtener info de una entrada concreta.
-router.get(
-    '/posts/:postId',
-    postExists,
-    getPostController,
-);
+router.get('/posts/:postId', postExists, getPostController);
 
 // Devolver ordenados los posts de un usuario.
-router.get('/user/Posts',
-postExists,
-getPostController,
-searchPostUser
-);
+router.get('/user/Posts', postExists, getPostController, searchPostUser);
 
 // Devolver busqueda por descripcion o palabras clave.
-router.get('/posts/key', 
-postExists,
-getPostController,
-searchByDesc
-);
+router.get('/posts/key', postExists, getPostController, searchByDesc);
 
 module.exports = router;
