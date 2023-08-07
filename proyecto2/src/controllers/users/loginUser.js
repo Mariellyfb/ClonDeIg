@@ -1,6 +1,5 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const getDb = require("../../db/getDb");
 const selectUserByEmailModel = require("../../models/users/selectUserByEmailModel");
 
 const { missingFields } = require("../../services/errorService");
@@ -8,7 +7,6 @@ const { invalidCredentialsError } = require("../../services/errorService");
 let connection;
 const loginUser = async (req, res, next) => {
   try {
-    connection = await getDb();
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -26,7 +24,6 @@ const loginUser = async (req, res, next) => {
     }
     const tokenInfo = {
       id: user.id,
-      /* role: user.role, */
     };
 
     //Creamos el token

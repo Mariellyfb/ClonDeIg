@@ -1,8 +1,8 @@
 const getDb = require("../../db/getDb");
 
-const { invalidCredentialsError } = require("../../services/errorService");
+const { notFoundError } = require("../../services/errorService");
 
-const selectUserByEmailModel = async (email) => {
+const selectUserByIdModel = async (userId) => {
   let connection;
 
   try {
@@ -10,13 +10,13 @@ const selectUserByEmailModel = async (email) => {
 
     // Comprobamos si hay algun usuario con el email proporcionado.
     const [users] = await connection.query(
-      `SELECT id, password FROM users  WHERE email = ?`,
-      [email]
+      `SELECT id, username, createdAt FROM users WHERE id = ?`,
+      [userId]
     );
 
-    // Si no existe un usuario con ese email lanzamos un error.
+    // Si no existe un usuario lanzamos un error.
     if (users.length < 1) {
-      invalidCredentialsError();
+      notFoundError();
     }
 
     // El array de usuarios solo podra contener un unico usuario.
@@ -26,4 +26,4 @@ const selectUserByEmailModel = async (email) => {
   }
 };
 
-module.exports = selectUserByEmailModel;
+module.exports = selectUserByIdModel;
