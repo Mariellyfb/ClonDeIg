@@ -1,29 +1,40 @@
-require('dotenv').config();
-const morgan = require('morgan');
-const newUserController = require('./src/controllers/users/newUserController');
-//Importamos las dependencias
+require("dotenv").config();
 
-const express = require('express');
-/*const cors = require("cors");
- */
+//Importamos las dependencias
+const express = require("express");
+const morgan = require("morgan");
+/* const cors = require("cors"); */
+/* const fileUpload = require("express-fileupload"); */
+const routes = require("./src/routes/userRoutes");
 
 // creamos servidor
 const app = express();
 
-//midleware de info por consola
-app.use(morgan('dev'));
+// Middleware que muestra por consola info sobre la peticion entrante.
+app.use(morgan("dev"));
 
-// Importamos los errores.
-const {
-    notFoundController,
-    errorController,
-} = require('./src/controllers/errors');
+// Middleware que "Z" un body en formato raw, creando la propiedad "body" en el objeto "request".
+app.use(express.json());
 
-app.post(newUserController);
+//Middleware que indica a express dónde estan las rutas.
+app.use(routes);
 
-app.use(notFoundController)
-app.use(errorController)
+// Middleware de error.
+app.use((err, req, res, next) => {
+  res.status(err.httpStatus || 500).send({
+    status: "error",
+    message: err.message,
+  });
+});
+
+// Middleware de ruta no encontrada.
+app.use((req, res) => {
+  res.status(404).send({
+    status: "error",
+    message: "La ruta no existe",
+  });
+});
 
 app.listen(process.env.PORT, () => {
-    console.log(`Servidor en escucha en http://localhost:${process.env.PORT}`);
+  console.log(`Servidor en escucha en http://localhost:${process.env.PORT}`);
 });
