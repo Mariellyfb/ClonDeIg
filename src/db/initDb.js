@@ -10,9 +10,7 @@ const main = async () => {
 
         console.log('borrando tablas si existen...');
 
-        await connection.query(
-            'DROP TABLE IF EXISTS comments, likes, posts, users'
-        );
+        await connection.query('DROP TABLE IF EXISTS likes, posts, users');
 
         console.log('creando tablas...');
 

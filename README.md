@@ -51,29 +51,25 @@ Este proyecto consiste en crear una API que simula el funcionamiento de una apli
 
 ### Usuarios
 
-POST [/users] - Registro de usuario ¡(utilizando FormData).
+POST [/users/register] - Registro de usuario (utilizando FormData). ✅
 
-POST [/users/login] - Inicio de sesión de usuario (devuelve token, (nombre de usuario, avatar si no se implementa get /users)).
+POST [/users/login] - Inicio de sesión de usuario (devuelve token, (emai,password)).✅
 
-GET [/users] - Devuelve información del usuario correspondiente al token (TOKEN).
-
-PUT [/users] - Edita el correo electrónico o el nombre de usuario (TOKEN).
+GET [/users] - Devuelve información del usuario correspondiente al id (Id).✅
 
 ### Posts
 
-POST [/posts] - Crea una nueva publicación (cuerpo en formData). TOKEN.
+POST [/posts] - Crea una nueva publicación (cuerpo en formData). TOKEN.✅
 
-GET [/posts] - Lista de publicaciones ordenadas por fecha de manera descendente:
+GET [/users/post] - Devolver ordenados los posts de un usuario
+
+GET [/posts/home] - Lista de publicaciones ordenadas por fecha de manera descendente:
 
 -   Arreglo de objetos con información de las publicaciones, incluyendo si el usuario autenticado ha dado "like" a la publicación y el número de "likes" y comentarios.
 
-GET [/posts/:idUser] - Lista de publicaciones ordenadas por fecha de manera descendente de un usuario en particular.
+GET [/posts/postId] - Devuelve información de una publicación según su descripción, incluyendo "likes" y comentarios.
 
-GET [/photos/postId] - Devuelve información de una publicación según su descripción, incluyendo "likes" y comentarios.
-
-POST [/photos/:postId/likes] - Añade o quita un "like" a una publicación y devuelve el número actualizado de "likes". TOKEN.
-
-DELETE [/photos/userId:postId] - Borra una publicación solo si el usuario autenticado es el que la creó. TOKEN.
+POST [/posts/:postId/likes] - Añade o quita un "like" a una publicación y devuelve el número actualizado de "likes". TOKEN.
 
 ### Tabla de Usuarios
 

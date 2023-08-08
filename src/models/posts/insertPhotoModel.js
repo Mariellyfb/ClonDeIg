@@ -1,8 +1,7 @@
-// Importamos las dependencias.
+/* // Importamos las dependencias.
 const uuid = require('uuid');
 // Importamos la función que devuelve una conexión con la base de datos.
 const getDb = require('../../db/getDb');
-
 
 // Función que realiza una consulta a la base de datos para agregar una foto a una entrada.
 const insertPhotoModel = async (photoName, postId) => {
@@ -16,7 +15,7 @@ const insertPhotoModel = async (photoName, postId) => {
 
         // Insertamos la foto.
         await connection.query(
-            `INSERT INTO entryPhotos(id, name, postId) VALUES(?, ?, ?)`,
+            `INSERT INTO entryPhotos(name, postId) VALUES(?, ?, ?)`,
             [photoId, photoName, postId]
         );
 
@@ -27,3 +26,4 @@ const insertPhotoModel = async (photoName, postId) => {
 };
 
 module.exports = insertPhotoModel;
+ */
