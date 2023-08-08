@@ -1,153 +1,111 @@
 # Simple Instagram API
 
-Este ejercicio consiste en crear una API que simule el funcionamiento de una aplicación similar a Instagram.
+Este proyecto consiste en crear una API que simula el funcionamiento de una aplicación similar a Instagram.
 
-## Instalar
+## Instalación
 
-1. Instalar las dependencias mediante el comando `npm install` o `npm i`.
+1. Instala las dependencias mediante el comando `npm install` o `npm i`.
 
-2. Guardar el archivo `.env.example` como `.env` y cubrir los datos necesarios.
+2. Renombra el archivo `.env.example` a `.env` y proporciona los datos necesarios.
 
-3. Ejecutar `npm run initDb` para crear las tablas necesarias en la base de datos anteriormente creada.
+3. Ejecuta `npm run initDb` para crear las tablas necesarias en la base de datos ya creada.
 
-4. Ejecutar `npm run dev` o `npm start` para lanzar el servidor.
+4. Ejecuta `npm run dev` o `npm start` para iniciar el servidor.
 
-## URL
+## Repositorio
 
--   https://github.com/Mariellyfb/ClonDeIg.git
+-   [Repositorio GitHub](https://github.com/Mariellyfb/ClonDeIg.git)
 
 ## Entidades
 
--   Users:
+### Users
 
-    -   id
-    -   email || phone
-    -   name
-    -   username
-    -   password
-    -   createdAt
+-   `id`
+-   `email`
+-   `name`
+-   `lastname`
+-   `phone`
+-   `avatar`
+-   `username`
+-   `password`
+-   `createdAt`
+-   `modifiedAt`
 
--   Posts:
+### Posts
 
-    -   id
-    -   userId
-    -   description
-    -   photo
-    -   updatedAt
-    -   createdAt
+-   `id`
+-   `description`
+-   `photo`
+-   `userId`
+-   `createdAt`
+-   `modifiedAt`
 
-        (hasta 10 fts post)
-        (midelware de error si quiere seleccionar mas de 10 fts)
+### Likes
 
--   Likes:
-
-    -   id
-    -   userId
-    -   postId
-    -   createdAt
-
--   Followers:
-
-    -   Id
-    -   userId
-    -   followerId
-    -   accepted
-
--   Comments:
-    -   Id
-    -   userId
-    -   postId
-    -   content
-    -   updatedAt
-    -   createdAt
-
-<img src="http://localhost:3000/jf8fujf8f8uf8f8f8.jpg" alt="fdgf">
+-   `id`
+-   `userId`
+-   `postId`
+-   `createdAt`
 
 ## Endpoints
 
-### Usuarios: ✅
+### Usuarios
 
-POST [/users] - Registro de usuario. (body formData para poder enviar foto avatar)
+POST [/users] - Registro de usuario ¡(utilizando FormData).
 
-POST [/users/login] - Login de usuario (devuelve token, (username, avatar si no se implementa get /users) ).
-GET [/users] - Devuelve información del usuario del token. TOKEN
+POST [/users/login] - Inicio de sesión de usuario (devuelve token, (nombre de usuario, avatar si no se implementa get /users)).
 
-**_ PUT [/users] - Editar el email o el nombre de usuario. TOKEN _**
+GET [/users] - Devuelve información del usuario correspondiente al token (TOKEN).
 
-### Posts:
+PUT [/users] - Edita el correo electrónico o el nombre de usuario (TOKEN).
 
-POST [/posts] - Permite crear post (body de tipo formData). TOKEN
+### Posts
 
-GET [/posts] - Lista de los posts ordenados por fecha desc
-    [
-        {
-            id 
-            desc
-            photo 
-            userId
-            username
-            avatar
-            createdAt
-            isLiked,
-            numLikes,
-            numComentarios
-        },
-       {
-            id 
-            desc
-            photo 
-            userId
-            avatar
-            username
-            createdAt
-            isLiked,
-            numLikes,
-            numComentarios
-        },
-    ]
-    /posts -> lista de los posts ordenados por fecha desc
-    /posts?search=Italia
-    /posts?search=Italia&order=fecha&orderType=ASC
-    /posts?order=likes&orderType=DESC
-    /posts?order=coments&orderType=DESC
+POST [/posts] - Crea una nueva publicación (cuerpo en formData). TOKEN.
 
-GET [/posts/:idUser] - Lista de los posts ordenados por fecha desc de idUser
+GET [/posts] - Lista de publicaciones ordenadas por fecha de manera descendente:
 
-GET [/photos/postId] - Devuelve información de un post por su descripción.
-{
-       id 
-       description
-       photo 
-       userId
-       username
-       createdAt
-       isLiked,
-       numLikes,
-       likes: [
-        {
-            userid
-            username
-        }
-       ]
-       numComentarios
-       comentarios: [
-        {
-            id
-            userid
-            username
-            content
-        },
-        {
-            id
-            userid
-            username
-            content
-        }
-       ]
-}
+-   Arreglo de objetos con información de las publicaciones, incluyendo si el usuario autenticado ha dado "like" a la publicación y el número de "likes" y comentarios.
 
-POST [/photos/:postId/likes] - Añade/quita un like a una foto, devolver el numero actualizado de likes. TOKEN
+GET [/posts/:idUser] - Lista de publicaciones ordenadas por fecha de manera descendente de un usuario en particular.
 
+GET [/photos/postId] - Devuelve información de una publicación según su descripción, incluyendo "likes" y comentarios.
 
+POST [/photos/:postId/likes] - Añade o quita un "like" a una publicación y devuelve el número actualizado de "likes". TOKEN.
 
-**_ DELETE [/photos/userId:postId] - Borra una foto solo si eres quien lo creó. TOKEN _**
+DELETE [/photos/userId:postId] - Borra una publicación solo si el usuario autenticado es el que la creó. TOKEN.
+
+### Tabla de Usuarios
+
+| Campo      | Tipo         | Descripción                            |
+| ---------- | ------------ | -------------------------------------- |
+| id         | INT UNSIGNED | Identificador único del usuario        |
+| email      | VARCHAR(100) | Correo electrónico del usuario         |
+| name       | VARCHAR(100) | Nombre del usuario                     |
+| lastname   | VARCHAR(100) | Apellidos del usuario                  |
+| phone      | VARCHAR(10)  | Número de teléfono del usuario         |
+| avatar     | VARCHAR(200) | Nombre del avatar del usuario          |
+| username   | VARCHAR(50)  | Nombre de usuario                      |
+| password   | VARCHAR(100) | Contraseña del usuario (hash)          |
+| createdAt  | DATETIME     | Fecha y hora de creación del usuario   |
+| modifiedAt | DATETIME     | Fecha y hora de la última modificación |
+
+### Tabla de Publicaciones
+
+| Campo       | Tipo         | Descripción                                |
+| ----------- | ------------ | ------------------------------------------ |
+| id          | INT UNSIGNED | Identificador único de la publicación      |
+| description | TEXT         | Descripción de la publicación              |
+| photo       | VARCHAR(200) | URL de la foto de la publicación           |
+| userId      | INT UNSIGNED | ID del usuario creador de la publicación   |
+| createdAt   | DATETIME     | Fecha y hora de creación de la publicación |
+| modifiedAt  | DATETIME     | Fecha y hora de la última modificación     |
+
+### Tabla de Likes
+
+| Campo     | Tipo         | Descripción                              |
+| --------- | ------------ | ---------------------------------------- |
+| id        | INT UNSIGNED | Identificador único del like             |
+| userId    | INT UNSIGNED | ID del usuario que dio el like           |
+| postId    | INT UNSIGNED | ID de la publicación que recibió el like |
+| createdAt | DATETIME     | Fecha y hora de creación del like        |
