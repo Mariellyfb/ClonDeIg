@@ -12,7 +12,9 @@ const {
     searchPostUser,
 } = require('../controllers/posts');
 
-const { insertPostModel, insertPhotoModel } = require('../models/posts');
+//const { insertPostModel, insertPhotoModel } = require('../models/posts');
+
+const searchPostHome = require('../models/posts/searchAllPostModel');
 
 //Nuevo post.
 router.post('/posts', authUser, userExist, newPostController);
@@ -27,7 +29,7 @@ router.post(
 );
 
 // Obtener posts por su publicacion de forma descendente
-router.get('/posts/home', postExists, getPostController);
+router.get('/posts/home', searchPostHome);
 
 //obtener posts pos su descripcion
 router.get('/posts/key', postExists, getPostController, searchByDesc);
