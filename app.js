@@ -36,6 +36,15 @@ app.use(fileUpload());
 //Middleware que indica a express dónde estan las rutas.
 app.use(routes);
 
+// Falta middleware errores
+
+app.use((err, req, res, next) => {
+    res.status(err.httpStatus || 500).send({
+        status: 'error',
+        message: err.message,
+    });
+});
+
 // Middleware de ruta no encontrada.
 app.use((req, res) => {
     res.status(404).send({

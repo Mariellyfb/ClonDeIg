@@ -1,26 +1,20 @@
-// Importamos las dependencias.
-const uuid = require('uuid');
-
 // Importamos la funcion que devuelve la conexion con la base de datos.
 const getDb = require('../../db/getDb');
 
-const insertPostModel = async (description, userId) => {
+const insertPostModel = async (description, fotoName, userId) => {
     let connection;
 
     try {
         connection = await getDb();
 
-        // Generamos el id del post.
-        let postId = uuid.v4();
-
         // Insertamos el nuevo post.
-        await connection.query(
-            `INSERT INTO posts(id, description, userId) VALUES(?, ?, ?)`,
-            [postId, description, userId]
+        const [post] = await connection.query(
+            `INSERT INTO posts( description, photo, userId) VALUES( ?, ?, ?)`,
+            [description, fotoName, userId]
         );
 
         // Retornamos el id del post.
-        return postId;
+        return post.insertId;
     } finally {
         if (connection) connection.release();
     }

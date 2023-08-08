@@ -37,7 +37,7 @@ const searchPostIdModel = async (userId, postId = 0) => {
         // Si el usuario tiene algun post, lo obtenemos.
         for (const post of posts) {
             const [posts] = await connection.query(
-                `SELECT id, description, photo FROM posts WHERE postId = ?`,
+                `SELECT id, description, photo FROM posts WHERE id = ?`,
                 [post.id]
             );
 

@@ -15,24 +15,7 @@ const {
 const { insertPostModel, insertPhotoModel } = require('../models/posts');
 
 //Nuevo post.
-router.post(
-    '/posts',
-    insertPostModel,
-    insertPhotoModel,
-    postExists,
-    authUser,
-    userExist,
-    newPostController
-);
-
-// Listar ordenados los posts de un usuario en concreto.
-router.get(
-    '/users/posts',
-    authUser,
-    getPostController,
-    searchByDesc,
-    searchPostUser
-);
+router.post('/posts', authUser, userExist, newPostController);
 
 // Likes.
 router.post(
@@ -48,5 +31,14 @@ router.get('/posts/key', postExists, getPostController, searchByDesc);
 
 // Devolver ordenados los posts de un usuario.
 router.get('/user/Posts', postExists, getPostController, searchPostUser);
+
+// Listar ordenados los posts de un usuario en concreto.
+router.get(
+    '/users/posts',
+    authUser,
+    getPostController,
+    searchByDesc,
+    searchPostUser
+);
 
 module.exports = router;

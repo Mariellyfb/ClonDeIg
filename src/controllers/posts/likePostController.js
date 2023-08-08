@@ -12,10 +12,9 @@ const likePostSchema = require('../../schemas/posts/likePostSchema');
 const likePostController = async (req, res, next) => {
     try {
         const { postId } = req.params;
-        const { value } = req.body;
 
         // Validamos el body con Joi.
-        await (likePostSchema, req.body);
+        //await (likePostSchema, req.body);
 
         // Obtenemos los detalles de la entrada.
         const post = await searchPostUser(postId);
@@ -26,7 +25,7 @@ const likePostController = async (req, res, next) => {
         }
 
         // Insertamos el like y obtenemos la cantidad modificada.
-        const likeAvg = await insertLikeModel(value, postId, req.user.id);
+        const likeAvg = await insertLikeModel(postId, req.user.id);
 
         res.send({
             status: 'ok',
