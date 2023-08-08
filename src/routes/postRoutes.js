@@ -26,19 +26,13 @@ router.post(
     likePostController
 );
 
-// Obtener posts por su descripcion o palabras clave.
+// Obtener posts por su publicacion de forma descendente
+router.get('/posts/home', postExists, getPostController);
+
+//obtener posts pos su descripcion
 router.get('/posts/key', postExists, getPostController, searchByDesc);
 
 // Devolver ordenados los posts de un usuario.
-router.get('/user/Posts', postExists, getPostController, searchPostUser);
-
-// Listar ordenados los posts de un usuario en concreto.
-router.get(
-    '/users/posts',
-    authUser,
-    getPostController,
-    searchByDesc,
-    searchPostUser
-);
+router.get('/users/posts', postExists, getPostController, searchPostUser);
 
 module.exports = router;
