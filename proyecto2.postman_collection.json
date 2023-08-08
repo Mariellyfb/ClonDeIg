@@ -1,19 +1,20 @@
 {
 	"info": {
-		"_postman_id": "0a27c82a-b996-497a-a7ba-af9e17fe7eff",
-		"name": "proyecto2",
+		"_postman_id": "459b7bc2-577a-4cf1-a01c-e64fee5f932a",
+		"name": "Proyecto2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "28446710"
+		"_exporter_id": "28446750",
+		"_collection_link": "https://warped-water-975776.postman.co/workspace/ef612ee7-aaaf-43ad-b4ff-db4c7141d76a/collection/28446750-459b7bc2-577a-4cf1-a01c-e64fee5f932a?action=share&creator=28446750&source=collection_link"
 	},
 	"item": [
 		{
-			"name": "New User",
+			"name": "registro",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"mariellys\",  \n    \"email\": \"marielys@gmail.com\",\n    \"password\": \"123456\"\n  }",
+					"raw": "{\r\n    \"email\": \"stefano@gmail.com\",\r\n    \"password\": \"123456\",\r\n    \"username\": \"Ste\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -21,12 +22,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/users/register",
+					"raw": "http://localhost:4000/users/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "4000",
 					"path": [
 						"users",
 						"register"
@@ -36,13 +37,25 @@
 			"response": []
 		},
 		{
-			"name": "user Login",
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.globals.set(\"TOKEN\", jsonData.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"lucia@gmail.com\",\n    \"password\": \"123456\"\n}",
+					"raw": "{\r\n    \"email\": \"stefano@gmail.com\",\r\n    \"password\": \"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -50,12 +63,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/users/login",
+					"raw": "http://localhost:4000/users/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "4000",
 					"path": [
 						"users",
 						"login"
@@ -65,25 +78,57 @@
 			"response": []
 		},
 		{
-			"name": "Get User Profile",
+			"name": "newPost",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "description",
+							"value": "Stefanino",
+							"type": "text"
+						},
+						{
+							"key": "foto",
+							"type": "file",
+							"src": "/C:/Users/User/Downloads/fotoPerfil.png"
+						}
+					]
+				},
 				"url": {
-					"raw": "http://localhost:5000/users/:userId",
+					"raw": "http://localhost:4000/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "4000",
 					"path": [
-						"users",
-						":userId"
+						"posts"
 					],
-					"variable": [
+					"query": [
 						{
-							"key": "userId",
-							"value": "1"
+							"key": "description",
+							"value": null,
+							"disabled": true
 						}
 					]
 				}
@@ -91,77 +136,102 @@
 			"response": []
 		},
 		{
-			"name": "user post",
+			"name": "like",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
-				"header": []
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/posts/1/likes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"posts",
+						"1",
+						"likes"
+					],
+					"query": [
+						{
+							"key": "description",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "Get Own  User",
+			"name": "listaDePostsUser",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
 			"request": {
 				"method": "GET",
-				"header": [
-					{
-						"key": "",
-						"value": "",
-						"type": "text",
-						"disabled": true
-					}
-				],
+				"header": [],
 				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "postId",
+							"value": "1",
+							"type": "text",
+							"disabled": true
 						}
-					}
+					]
 				},
 				"url": {
-					"raw": "http://localhost:5000/user",
+					"raw": "http://localhost:4000/users/posts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "4000",
 					"path": [
-						"user"
+						"users",
+						"posts"
 					]
 				}
 			},
 			"response": []
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
 		},
 		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "token_user_1",
-			"value": "",
-			"type": "string"
+			"name": "recursoStatic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/e0f47afd-f327-49c4-a5f9-79bb1ec89ff2.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"e0f47afd-f327-49c4-a5f9-79bb1ec89ff2.jpg"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
