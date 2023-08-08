@@ -1,20 +1,22 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const getDb = require("./getDb.js");
+const getDb = require('./getDb.js');
 
 const main = async () => {
-  let connection;
+    let connection;
 
-  try {
-    connection = await getDb();
+    try {
+        connection = await getDb();
 
-    console.log("borrando tablas si existen...");
+        console.log('borrando tablas si existen...');
 
-    await connection.query("DROP TABLE IF EXISTS likes, posts, users");
+        await connection.query(
+            'DROP TABLE IF EXISTS comments, likes, posts, users'
+        );
 
-    console.log("creando tablas...");
+        console.log('creando tablas...');
 
-    await connection.query(`
+        await connection.query(`
         CREATE TABLE IF NOT EXISTS users (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             username VARCHAR (50) NOT NULL,
@@ -28,7 +30,7 @@ const main = async () => {
         )
         `);
 
-    await connection.query(`
+        await connection.query(`
         CREATE TABLE IF NOT EXISTS posts (
             id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
             description TEXT NOT NULL,
@@ -40,7 +42,7 @@ const main = async () => {
         )
         `);
 
-    await connection.query(`
+        await connection.query(`
    CREATE TABLE IF NOT EXISTS likes (
        id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
        amount TINYINT UNSIGNED NOT NULL,
@@ -52,12 +54,12 @@ const main = async () => {
        UNIQUE(userId,postId)
    )
 `);
-  } catch (err) {
-    console.error(err);
-  } finally {
-    if (connection) connection.release();
-    process.exit();
-  }
+    } catch (err) {
+        console.error(err);
+    } finally {
+        if (connection) connection.release();
+        process.exit();
+    }
 };
 
 main();

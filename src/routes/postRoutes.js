@@ -39,7 +39,7 @@ router.post(
     '/posts/:postId/likes',
     authUser,
     userExist,
-    postExists,
+    /*   postExists, */
     likePostController
 );
 

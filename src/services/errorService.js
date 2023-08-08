@@ -23,6 +23,14 @@ module.exports = {
         };
     },
 
+    invalidTokenError() {
+        throw {
+            httpStatus: 401, // Invalid Token
+            code: 'INVALID_TOKEN',
+            message: 'Token inválido',
+        };
+    },
+
     likeAlreadyExistsError() {
         throw {
             httpStatus: 403, // Like exists
@@ -31,11 +39,18 @@ module.exports = {
         };
     },
 
-    missingFields() {
+    missingFieldsError() {
         throw {
             httpStatus: 400, // Bad Request
             code: 'MISSING_FIELDS',
             message: 'faltan campos',
+        };
+    },
+    notAuthenticatedError() {
+        throw {
+            httpStatus: 401, // Unauthorized
+            code: 'NOT_AUTHENTICATED',
+            message: `Debe enviar un token en el header 'Authorization'`,
         };
     },
 
