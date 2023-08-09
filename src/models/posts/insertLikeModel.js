@@ -19,10 +19,11 @@ const insertLikeModel = async (postId, userId) => {
 
         // Si la longitud del array de likes es mayor que cero, lanzamos un error indicando que el usuario ya ha dado like a ese post.
         if (like.length > 0) {
+            let likeID = like[0].id
             // Si el usuario ya ha dado like, entonces lo eliminamos.
             await connection.query(
-                `DELETE FROM likes WHERE userId = ? AND postId = ?`,
-                [userId, postId]
+                `DELETE FROM likes WHERE id=?`,
+                [likeID]
             );
         } else {
             // Insertamos el like si no está dado.
@@ -35,7 +36,7 @@ const insertLikeModel = async (postId, userId) => {
         // Obtenemos la cantidad de likes.
 
         const [likeAvg] = await connection.query(
-            `SELECT AVG(amount) AS avg FROM likes WHERE postId = ?`,
+            `SELECT COUNT(id) AS avg FROM likes WHERE postId = ?`,
             [postId]
         );
 

@@ -10,8 +10,16 @@ const searchAllPostModel = async () => {
 
         const [posts] = await connection.query(
             `
-        SELECT * FROM posts
-        ORDER BY createdAt DESC
+            SELECT
+            P.id,
+            P.description,
+            P.photo,
+            U.username,
+            P.userId,
+            P.createdAt
+        FROM posts P
+        INNER JOIN users U ON U.id = P.userId
+        ORDER BY P.createdAt DESC
         `
         );
 
@@ -25,19 +33,5 @@ const searchAllPostModel = async () => {
     }
 };
 
-const searchPostHome = async (req, res, next) => {
-    try {
-        const posts = await searchAllPostModel();
 
-        res.send({
-            status: 'ok',
-            data: {
-                posts,
-            },
-        });
-    } catch (err) {
-        next(err);
-    }
-};
-
-module.exports = searchPostHome;
+module.exports = searchAllPostModel;

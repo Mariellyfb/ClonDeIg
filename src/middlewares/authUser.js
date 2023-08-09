@@ -10,7 +10,7 @@ const authUser = async (req, res, next) => {
         const { authorization } = req.headers;
 
         if (!authorization) {
-            return notAuthenticatedError(next);
+            notAuthenticatedError(next);
         }
 
         let tokenInfo;
@@ -18,8 +18,7 @@ const authUser = async (req, res, next) => {
         try {
             tokenInfo = jwt.verify(authorization, process.env.SECRET);
         } catch (err) {
-            console.log(err);
-            return invalidCredentialsError(next);
+            invalidCredentialsError();
         }
 
         req.user = tokenInfo;

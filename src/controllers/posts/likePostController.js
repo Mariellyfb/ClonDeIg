@@ -1,6 +1,5 @@
 // Importamos los modelos.
-const searchPostUser = require('../../models/posts/searchPostModel');
-const insertLikeModel = require('../../models/posts/insertLikeModel');
+const {searchPostModel, insertLikeModel} = require("../../models/posts")
 
 // Importamos los errores.
 const { cannotLikeOwnPostError } = require('../../services/errorService');
@@ -17,10 +16,10 @@ const likePostController = async (req, res, next) => {
         //await (likePostSchema, req.body);
 
         // Obtenemos los detalles de la entrada.
-        const post = await searchPostUser(postId);
+        const post = await searchPostModel(postId);
 
         // Si somos los dueños de la entrada lanzamos un error.
-        if (post.userId === req.user.id) {
+        if (post[0].userId === req.user.id) {
             cannotLikeOwnPostError();
         }
 

@@ -12,7 +12,7 @@ const newPostSchema = require('../../schemas/posts/newPostSchema');
 // Función controladora final que agrega un nuevo post.
 const newPostController = async (req, res, next) => {
     try {
-        const { description, photo } = req.body;
+        const { description } = req.body;
 
         // Validamos el body con Joi. Fusionamos en un solo objeto las propiedades de body y de files.
         /*

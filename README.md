@@ -61,13 +61,14 @@ GET [/users] - Devuelve información del usuario correspondiente al id (Id).✅
 
 POST [/posts] - Crea una nueva publicación (cuerpo en formData). TOKEN.✅
 
-GET [/users/post] - Devolver ordenados los posts de un usuario
+GET [/posts/home] - Lista de publicaciones ordenadas por fecha de manera descendente: ✅
 
-GET [/posts/home] - Lista de publicaciones ordenadas por fecha de manera descendente:
+
+GET ['/users/:userId/posts] - Devolver ordenados los posts de un usuario
 
 -   Arreglo de objetos con información de las publicaciones, incluyendo si el usuario autenticado ha dado "like" a la publicación y el número de "likes" y comentarios.
 
-GET [/posts/postId] - Devuelve información de una publicación según su descripción, incluyendo "likes" y comentarios.
+GET [/posts/:postId] - Devuelve información de una publicación según su descripción, incluyendo "likes" y comentarios.
 
 POST [/posts/:postId/likes] - Añade o quita un "like" a una publicación y devuelve el número actualizado de "likes". TOKEN.
 

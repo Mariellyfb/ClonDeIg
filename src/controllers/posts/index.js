@@ -1,13 +1,13 @@
-const getPostController = require('./getPostController');
+const getPostController = require('./getPostController.js');
 const likePostController = require('./likePostController');
 const newPostController = require('./newPostController');
-const searchByDesc = require('./searchByDescController');
-const searchPostUser = require('./searchPostUser');
+const getPostsUserController = require("./getPostsUserController")
+const getPostsController = require("./getPostsController")
 
 module.exports = {
     getPostController,
     likePostController,
     newPostController,
-    searchByDesc,
-    searchPostUser,
+    getPostsController,
+    getPostsUserController,
 };

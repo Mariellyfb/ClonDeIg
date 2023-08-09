@@ -1,13 +1,15 @@
 const insertPostModel = require('./insertPostModel');
 const insertPhotoModel = require('./insertPhotoModel');
 const insertLikeModel = require('./insertLikeModel');
-const searchPostByDescModel = require('./searchPostByDescModel');
-const searchPostModel = require('./searchPostModel');
+const searchPostsUserModel = require('./searchPostsUserModel');
+const searchPostModel = require("./searchPostModel")
+const searchAllPostModel = require("./searchAllPostModel")
 
 module.exports = {
     insertLikeModel,
     insertPhotoModel,
     insertPostModel,
-    searchPostByDescModel,
+    searchPostsUserModel,
     searchPostModel,
+    searchAllPostModel
 };
