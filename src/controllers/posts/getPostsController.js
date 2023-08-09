@@ -5,7 +5,7 @@ const {searchAllPostModel} = require('../../models/posts');
 const getPostController = async (req, res, next) => {
     try {
         // Obtenemos el id de la entrada.
-        const { userId } = req.params;
+        //const { userId } = req.params;
 
         // Con la interrogación indicamos
         // a JavaScript que "user" puede ser undefined.

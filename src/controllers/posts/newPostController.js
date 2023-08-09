@@ -1,26 +1,14 @@
 // Importamos los modelos.
 const insertPostModel = require('../../models/posts/insertPostModel');
-const insertPhotoModel = require('../../models/posts/insertPhotoModel');
 
 // Importamos los servicios.
 const savePhotoService = require('../../services/savePhotoService');
-const validateSchemaService = require('../../services/validateSchemaService');
-
-// Importamos el esquema.
-const newPostSchema = require('../../schemas/posts/newPostSchema');
 
 // Función controladora final que agrega un nuevo post.
 const newPostController = async (req, res, next) => {
     try {
         const { description } = req.body;
 
-        // Validamos el body con Joi. Fusionamos en un solo objeto las propiedades de body y de files.
-        /*
-        await validateSchemaService(
-            newPostSchema,
-            Object.assign(req.body, req.files)
-        );
-        */
 
         let fotoName;
         // Si "req.files" existe quiere decir que hay algún archivo en la petición.
