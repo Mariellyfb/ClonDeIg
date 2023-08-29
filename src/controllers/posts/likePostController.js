@@ -1,7 +1,5 @@
-// Importamos los modelos.
+// Importamos los modelos y errores.
 const { searchPostModel, insertLikeModel } = require('../../models/posts');
-
-// Importamos los errores.
 const { cannotLikeOwnPostError } = require('../../services/errorService');
 
 // Función controladora final que permite votar una entrada.
@@ -17,13 +15,13 @@ const likePostController = async (req, res, next) => {
             cannotLikeOwnPostError();
         }
 
-        // Insertamos el like y obtenemos la cantidad modificada.
-        const likeAvg = await insertLikeModel(postId, req.user.id);
+        // Insertamos el like y obtenemos el número de likes.
+        const numLike = await insertLikeModel(postId, req.user.id);
 
         res.send({
             status: 'ok',
             data: {
-                likeAvg,
+                numLike,
             },
         });
     } catch (err) {

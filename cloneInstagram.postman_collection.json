@@ -144,6 +144,29 @@
             ]
         },
         {
+            "name": "Get User Profile",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "",
+                        "value": "",
+                        "type": "text",
+                        "disabled": true
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:3000/users/2",
+                    "protocol": "http",
+                    "host": ["localhost"],
+                    "port": "3000",
+                    "path": ["users", "2"]
+                }
+            },
+            "response": []
+        },
+
+        {
             "name": "Posts",
             "item": [
                 {

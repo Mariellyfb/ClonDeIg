@@ -17,8 +17,6 @@ const savePhotoService = async (img, width) => {
             process.env.UPLOADS_DIR
         );
 
-        console.log('uploadir', uploadsDir);
-
         // Creamos la carpeta uoloads usando el metodo "access".
         try {
             await fs.access(uploadsDir);
@@ -44,7 +42,6 @@ const savePhotoService = async (img, width) => {
         // Retornamos el nuevo nombre de la imagen
         return imgName;
     } catch (err) {
-        console.error(err);
         saveFileError();
     }
 };

@@ -19,15 +19,10 @@ router.post('/posts', authUser, userExist, newPostController);
 router.get('/posts/home', getPostsController);
 
 // Devolver ordenados los posts de un usuario.
-router.get('/users/:userId/posts', getPostsUserController);
+router.get('//posts', getPostsUserController);
 
 //obtener posts pos su id
-router.get('/posts/:postId', postExists, getPostController,);
-
-
-
-
-
+router.get('/posts/:postId', postExists, getPostController);
 
 // Likes.
 router.post(
@@ -37,6 +32,5 @@ router.post(
     postExists,
     likePostController
 );
-
 
 module.exports = router;
