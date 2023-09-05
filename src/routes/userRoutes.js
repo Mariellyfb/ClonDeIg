@@ -9,7 +9,7 @@ const getUserProfile = require('../controllers/users/getUserProfile');
 //const getOwnUser = require('../controllers/users/getOwnUser');
 
 //Crear un usuario.
-router.post('/users/register', newUser);
+router.post('/users/signup', newUser);
 
 // Login de usuario.
 router.post('/users/login', loginUser);

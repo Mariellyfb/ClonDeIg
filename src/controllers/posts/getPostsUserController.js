@@ -1,5 +1,5 @@
 // Importamos los modelos.
-const {searchPostsUserModel} = require('../../models/posts');
+const { searchPostsUserModel } = require('../../models/posts');
 
 // Función controladora final que retorna una entrada con un id dado.
 const getPostController = async (req, res, next) => {
@@ -7,8 +7,6 @@ const getPostController = async (req, res, next) => {
         // Obtenemos el id de la entrada.
         const { userId } = req.params;
 
-        // Con la interrogación indicamos
-        // a JavaScript que "user" puede ser undefined.
         const post = await searchPostsUserModel(userId);
 
         res.send({
