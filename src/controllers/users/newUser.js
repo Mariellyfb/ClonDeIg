@@ -1,15 +1,11 @@
 const insertUSerModel = require('../../models/users/insertUserModel');
+const validateSchemaService = require('../../services/validateSchemaService');
+const newUserSchema = require('../../schemas/newUserSchema');
 
 const newUser = async (req, res, next) => {
     try {
         const { username, email, password } = req.body;
-
-        // Si falta algún campo, lanzamos un error
-        if (!username || !email || !password) {
-            const err = new Error('Faltan campos');
-            err.httpStatus = 400;
-            throw err;
-        }
+        await validateSchemaService(newUserSchema, req.body);
 
         // Insertamos el usuario.
         await insertUSerModel(username, email, password);
