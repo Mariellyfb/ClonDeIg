@@ -1,23 +1,18 @@
 // Importamos los modelos.
-const { searchPostModel } = require('../../models/posts');
+const { searchAllPostModel } = require('../../models/posts');
 
 // Función controladora final que retorna una entrada con un id dado.
-const getPostController = async (req, res, next) => {
+const getPostsController = async (req, res, next) => {
     try {
-        // Obtenemos el id de la entrada.
-        const { postId } = req.params;
-
-        const post = await searchPostModel(postId);
+        const post = await searchAllPostModel();
 
         res.send({
             status: 'ok',
-            data: {
-                post,
-            },
+            data: post,
         });
     } catch (err) {
         next(err);
     }
 };
 
-module.exports = getPostController;
+module.exports = getPostsController;

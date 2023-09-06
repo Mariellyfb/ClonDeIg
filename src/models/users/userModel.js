@@ -1,5 +1,5 @@
 // Importa la función para obtener la conexión a la base de datos.
-const getDb = require('../db/getDb');
+const getDb = require('../../db/getDb');
 
 const userExists = async (userId) => {
     let connection;
