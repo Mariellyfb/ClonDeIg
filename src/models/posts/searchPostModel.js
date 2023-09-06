@@ -8,27 +8,33 @@ const searchPostModel = async (postId) => {
     try {
         connection = await getDb();
 
-        const [posts] = await connection.query(
+        const [postResults] = await connection.query(
             `
-            SELECT
+            SELECT 
             P.id,
             P.description,
             P.photo,
-            U.username,
-            P.userId,
-            P.createdAt
-        FROM posts P
-        INNER JOIN users U ON U.id = P.userId
-        WHERE P.id = ?
-        ORDER BY P.createdAt DESC
-        `, [postId]
+            U.username AS postOwnerUsername,
+            P.userId AS postOwnerId,
+            P.createdAt,
+            COUNT(P.id)AS numLikes
+          FROM posts P
+          INNER JOIN users U ON U.id = P.userId
+          LEFT JOIN likes L ON P.id = L.postId
+          WHERE P.id = ?
+          GROUP BY P.id
+          ORDER BY P.createdAt DESC
+            `,
+            [postId]
         );
 
         // Si no hay posts para mostrar lanzamos un error.
-        if (posts.length < 1) {
+        if (postResults.length < 1) {
             notFoundError();
         }
-        return posts;
+
+        const post = postResults[0];
+        return post;
     } finally {
         if (connection) connection.release();
     }

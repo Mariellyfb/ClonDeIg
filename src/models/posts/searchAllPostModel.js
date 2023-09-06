@@ -16,9 +16,13 @@ const searchAllPostModel = async () => {
             P.photo,
             U.username,
             P.userId,
-            P.createdAt
+            P.createdAt,
+            L.postId,
+            SUM(CASE WHEN L.postId IS NULL THEN 0 ELSE 1 END) AS numLikes
         FROM posts P
         INNER JOIN users U ON U.id = P.userId
+        LEFT JOIN likes L ON P.id = L.postId
+      GROUP BY P.id
         ORDER BY P.createdAt DESC
         `
         );
@@ -32,6 +36,5 @@ const searchAllPostModel = async () => {
         if (connection) connection.release();
     }
 };
-
 
 module.exports = searchAllPostModel;
