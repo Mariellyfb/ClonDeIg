@@ -1,6 +1,6 @@
 const insertUSerModel = require('../../models/users/insertUserModel');
 const validateSchemaService = require('../../services/validateSchemaService');
-const newUserSchema = require('../../schemas/newUserSchema');
+const newUserSchema = require('../../schemas/users/newUserSchema');
 
 const newUser = async (req, res, next) => {
     try {

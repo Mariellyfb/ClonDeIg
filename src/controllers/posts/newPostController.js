@@ -4,11 +4,18 @@ const insertPostModel = require('../../models/posts/insertPostModel');
 // Importamos los servicios.
 const savePhotoService = require('../../services/savePhotoService');
 
+const validateSchemaService = require('../../services/validateSchemaService');
+const newPostSchema = require('../../schemas/posts/newPostSchema');
+const { object } = require('joi');
+
 // Función controladora final que agrega un nuevo post.
 const newPostController = async (req, res, next) => {
     try {
         const { description } = req.body;
-
+        await validateSchemaService(
+            newPostSchema,
+            Object.assign(req.body, req.files)
+        );
         let fotoName;
         // Si "req.files" existe quiere decir que hay algún archivo en la petición.
         if (req.files) {
