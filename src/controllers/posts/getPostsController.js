@@ -4,13 +4,13 @@ const { searchAllPostModel } = require('../../models/posts');
 // Función controladora final que retorna una entrada con un id dado.
 const getPostsController = async (req, res, next) => {
     try {
-        const post = await searchAllPostModel();
+        const { keyword } = req.query;
+
+        const post = await searchAllPostModel(keyword, req.user?.id);
 
         res.send({
             status: 'ok',
-            data: {
-                post,
-            },
+            data: post,
         });
     } catch (err) {
         next(err);

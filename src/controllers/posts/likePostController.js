@@ -11,7 +11,7 @@ const likePostController = async (req, res, next) => {
         const post = await searchPostModel(postId);
 
         // Si somos los dueños de la entrada lanzamos un error.
-        if (post[0].userId === req.user.id) {
+        if (post.userId === req.user.id) {
             cannotLikeOwnPostError();
         }
 
@@ -20,9 +20,7 @@ const likePostController = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: {
-                numLike,
-            },
+            data: numLike,
         });
     } catch (err) {
         next(err);
