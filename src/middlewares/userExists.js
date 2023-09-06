@@ -1,6 +1,4 @@
-// Importamos la función que nos permite obtener una conexión libre con la base de datos.
-const getDB = require('../db/getDb');
-
+const userModel = require('../models/users/userModel');
 // Importamos los errores.
 const { notFoundError } = require('../services/errorService');
 
@@ -9,17 +7,11 @@ const userExists = async (req, res, next) => {
     let connection;
 
     try {
-        connection = await getDB();
-
         const userId = req.user?.id || req.params.userId;
-
-        const [users] = await connection.query(
-            `SELECT id FROM users WHERE id = ?`,
-            [userId]
-        );
+        const exists = await userModel.userExists(userId);
 
         // Lanzamos un error si el usuario no existe.
-        if (users.length < 1) {
+        if (!exists) {
             notFoundError();
         }
 
@@ -27,8 +19,6 @@ const userExists = async (req, res, next) => {
         next();
     } catch (err) {
         next(err);
-    } finally {
-        if (connection) connection.release();
     }
 };
 
