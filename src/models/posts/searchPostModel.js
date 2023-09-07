@@ -18,9 +18,9 @@ const searchPostModel = async (postId) => {
             P.userId AS postOwnerId,
             P.createdAt,
             COUNT(P.id)AS numLikes
-          FROM posts P
-          INNER JOIN users U ON U.id = P.userId
-          LEFT JOIN likes L ON P.id = L.postId
+            FROM posts P
+            INNER JOIN users U ON U.id = P.userId
+            LEFT JOIN likes L ON P.id = L.postId
           WHERE P.id = ?
           GROUP BY P.id
           ORDER BY P.createdAt DESC

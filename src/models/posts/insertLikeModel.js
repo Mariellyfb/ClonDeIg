@@ -29,7 +29,7 @@ const insertLikeModel = async (postId, userId) => {
         }
 
         // Retornamos la cantidad de likes.
-        return 69;
+        return like;
     } finally {
         if (connection) connection.release();
     }
