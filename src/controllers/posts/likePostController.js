@@ -20,9 +20,7 @@ const likePostController = async (req, res, next) => {
 
         res.send({
             status: 'ok',
-            data: {
-                numLike,
-            },
+            data: numLike,
         });
     } catch (err) {
         next(err);

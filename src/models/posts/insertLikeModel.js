@@ -28,8 +28,13 @@ const insertLikeModel = async (postId, userId) => {
             );
         }
 
+        const [totalLikes] = await connection.query(
+            `SELECT COUNT(*) AS totalLikes FROM likes WHERE postId = ?`,
+            [postId]
+        );
+
         // Retornamos la cantidad de likes.
-        return 99;
+        return totalLikes[0].totalLikes;
     } finally {
         if (connection) connection.release();
     }

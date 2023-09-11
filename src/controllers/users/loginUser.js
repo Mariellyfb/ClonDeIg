@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const selectUserByEmailModel = require('../../models/users/selectUserByEmailModel');
+const validateSchemaService = require('../../services/validateSchemaService');
+const loginUserSchema = require('../../schemas/users/loginUserSchema');
 
 const { missingFieldsError } = require('../../services/errorService');
 const { invalidCredentialsError } = require('../../services/errorService');
@@ -9,9 +11,8 @@ const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password) {
-            missingFieldsError();
-        }
+        await validateSchemaService(loginUserSchema, req.body);
+
         //Seleccionamos los datos del usuario que necesitamos utilizando el email.
         const user = await selectUserByEmailModel(email, password);
 
