@@ -2,7 +2,7 @@
 const uuid = require('uuid');
 const getDb = require('../../db/getDb');
 
-// Función que realiza una consulta a la base de datos para votar una entrada.
+// Función que realiza una consulta a la base de datos para dar like a un post.
 const insertLikeModel = async (postId, userId) => {
     let connection;
 
@@ -28,13 +28,13 @@ const insertLikeModel = async (postId, userId) => {
             );
         }
 
+        // Contamos los likes que tiene el post consultado.
         const [totalLikes] = await connection.query(
-            `SELECT COUNT(*) AS totalLikes FROM likes WHERE postId = ?`,
+            `SELECT postId, COUNT(*) as totalLikes FROM likes GROUP BY postId HAVING postId = ?`,
             [postId]
         );
-
-        // Retornamos la cantidad de likes.
-        return totalLikes[0].totalLikes;
+        // Retornamos la cantidad de likes para el post específico.
+        return totalLikes.length > 0 ? totalLikes[0].totalLikes : 0;
     } finally {
         if (connection) connection.release();
     }

@@ -15,7 +15,7 @@ const searchAllPostModel = async (keyword = '', userId = '') => {
             P.description,
             P.photo,
             U.username,
-            Bit_OR(L.userId = ?) AS likedByMe,
+            BIT_OR(L.userId = ?) AS likedByMe,
             P.userId,
             P.userId = ? AS owner,
             P.createdAt,

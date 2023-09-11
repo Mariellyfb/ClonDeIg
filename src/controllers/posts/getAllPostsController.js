@@ -1,7 +1,7 @@
 // Importamos los modelos.
 const { searchAllPostModel } = require('../../models/posts');
 
-// Función controladora final que retorna una entrada con un id dado.
+// Función controladora final que retorna todas los posts.
 const getPostsController = async (req, res, next) => {
     try {
         const { keyword } = req.query;

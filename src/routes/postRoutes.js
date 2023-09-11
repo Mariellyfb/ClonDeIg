@@ -6,10 +6,10 @@ const { postExists, authUser, userExist } = require('../middlewares');
 
 const {
     getPostController,
+    getPostsController,
     likePostController,
     newPostController,
     getPostsUserController,
-    getPostsController,
 } = require('../controllers/posts');
 
 //Nuevo post.
@@ -21,8 +21,8 @@ router.get('/posts/home', getPostsController);
 // Devolver ordenados los posts de un usuario.
 router.get('/users/:userId/posts', getPostsUserController);
 
-//obtener posts pos su id
-router.get('/posts/:postId', postExists, getPostController);
+//obtener posts pos su id.
+router.get('/posts/search/:postId', postExists, getPostController);
 
 // Likes.
 router.post(

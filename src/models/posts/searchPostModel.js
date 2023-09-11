@@ -8,7 +8,7 @@ const searchPostModel = async (postId) => {
     try {
         connection = await getDb();
 
-        const [postResults] = await connection.query(
+        const postResults = await connection.query(
             `
             SELECT 
             P.id,
@@ -17,11 +17,11 @@ const searchPostModel = async (postId) => {
             U.username AS postOwnerUsername,
             P.userId AS postOwnerId,
             P.createdAt,
-            COUNT(P.id)AS numLikes
+            COUNT(P.id) AS numLikes
             FROM posts P
             INNER JOIN users U ON U.id = P.userId
             LEFT JOIN likes L ON P.id = L.postId
-          WHERE P.id = ?
+            WHERE P.id = ?
           GROUP BY P.id
           ORDER BY P.createdAt DESC
             `,
@@ -33,8 +33,7 @@ const searchPostModel = async (postId) => {
             notFoundError();
         }
 
-        const post = postResults[0];
-        return post;
+        return postResults[0];
     } finally {
         if (connection) connection.release();
     }
