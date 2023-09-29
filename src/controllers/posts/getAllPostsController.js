@@ -6,6 +6,8 @@ const getPostsController = async (req, res, next) => {
     try {
         const { keyword } = req.query;
 
+        console.log(req.user?.id);
+
         const post = await searchAllPostModel(keyword, req.user?.id);
 
         res.send({

@@ -16,7 +16,7 @@ const {
 router.post('/posts', authUser, userExist, newPostController);
 
 // Obtener posts por su publicacion de forma descendente
-router.get('/posts/home', getPostsController);
+router.get('/posts/home', authUser, getPostsController);
 
 // Devolver ordenados los posts de un usuario.
 router.get('/users/:userId/posts', getPostsUserController);
