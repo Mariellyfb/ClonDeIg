@@ -5,6 +5,8 @@ const { notFoundError } = require('../../services/errorService');
 const searchAllPostModel = async (keyword = '', userId = '') => {
     let connection;
 
+    console.log(userId);
+
     try {
         connection = await getDb();
 
